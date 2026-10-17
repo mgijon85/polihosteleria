@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand: #0A63C9;
+  --brand-soft: rgba(10, 99, 201, 0.12);
+  --brand-ink: #FFFFFF;
+
+  --bg: #F5F5F7;
+  --surface: #FFFFFF;
+  --surface-2: #FAFAFC;
+  --line: rgba(0, 0, 0, 0.08);
+  --text: #1D1D1F;
+  --muted: #6E6E73;
+
+  --ok: #1F9D55;
+  --ok-soft: rgba(31, 157, 85, 0.12);
+  --warn: #C77700;
+  --warn-soft: rgba(199, 119, 0, 0.12);
+  --danger: #D93025;
+  --danger-soft: rgba(217, 48, 37, 0.12);
+}
+
+[data-theme="dark"] {
+  --brand: #2985F7;
+  --brand-soft: rgba(41, 133, 247, 0.20);
+  --brand-ink: #FFFFFF;
+
+  --bg: #0B0B0C;
+  --surface: #1C1C1E;
+  --surface-2: #2C2C2E;
+  --line: rgba(255, 255, 255, 0.08);
+  --text: #F5F5F7;
+  --muted: #98989D;
+
+  --ok: #2CD675;
+  --ok-soft: rgba(44, 214, 117, 0.16);
+  --warn: #F59E0B;
+  --warn-soft: rgba(245, 158, 11, 0.16);
+  --danger: #F87171;
+  --danger-soft: rgba(248, 113, 113, 0.16);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
+  color: var(--text);
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography styles */
+.text-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.02em;
+}
+
+/* Glass backdrop */
+.glass-header {
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+/* Apple style subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(120, 120, 128, 0.25);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(120, 120, 128, 0.4);
+}
+
+/* Focus visible standard */
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
