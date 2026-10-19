@@ -1,0 +1,100 @@
+---
+import Base from '../layouts/Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import { SITE } from '../data/site';
+import { breadcrumbs } from '../lib/schema';
+
+const items = [{ name: 'Quiero ser cliente', path: '/quiero-ser-cliente/' }];
+const tipos = ['Bar', 'Cafetería', 'Restaurante', 'Hotel', 'Colectividad', 'Guardería', 'Empresa de limpieza', 'Otro'];
+---
+<Base title="Hazte cliente de Polihostelería | Material de hostelería en Huelva" description="Date de alta como cliente de Polihostelería: te visita un comercial, te deja tus precios y pides por WhatsApp, teléfono o correo con reparto propio en Huelva." schema={[breadcrumbs(items)]}>
+  <main>
+    <section class="page-hero">
+      <div class="wrap split" style="align-items:start">
+        <div>
+          <Crumbs items={items} />
+          <h1>Date de alta en dos minutos</h1>
+          <p class="lede">Cuéntanos qué local tienes. Te llama un comercial, te visita y te deja tus precios. A partir de ahí pides cuando quieras.</p>
+          <ol class="list-check" style="margin-top:2rem">
+            <li>Rellenas esto y nos lo mandas por WhatsApp o por correo.</li>
+            <li>Te llamamos para quedar.</li>
+            <li>Te damos de alta con tus precios y tus días de reparto.</li>
+          </ol>
+          <p class="note" style="margin-top:2rem">¿Prefieres llamar? <a class="link" href={SITE.telefonoHref}>{SITE.telefono}</a> o <a class="link" href={SITE.movilHref}>{SITE.movil}</a>.</p>
+        </div>
+
+        <div class="form-card">
+          <form class="form" id="alta" method="post" action={`mailto:${SITE.emailInfo}?subject=Alta%20de%20cliente`} enctype="text/plain" novalidate>
+            <div class="field">
+              <label for="negocio">Nombre del local</label>
+              <input id="negocio" name="negocio" required autocomplete="organization" />
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="tipo">Tipo de local</label>
+                <select id="tipo" name="tipo" required>
+                  <option value="">Elige uno</option>
+                  {tipos.map((t) => <option>{t}</option>)}
+                </select>
+              </div>
+              <div class="field">
+                <label for="localidad">Localidad</label>
+                <input id="localidad" name="localidad" required autocomplete="address-level2" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="nombre">Tu nombre</label>
+                <input id="nombre" name="nombre" required autocomplete="name" />
+              </div>
+              <div class="field">
+                <label for="tel">Teléfono</label>
+                <input id="tel" name="telefono" type="tel" required autocomplete="tel" inputmode="tel" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="necesitas">¿Qué sueles necesitar? <span class="hint">(opcional)</span></label>
+              <textarea id="necesitas" name="necesitas" placeholder="Servilletas, vasos de caña, detergente del lavavajillas…"></textarea>
+            </div>
+            <label class="check"><input type="checkbox" id="priv" name="privacidad" required /> <span>He leído la <a class="link" href="/privacidad/">política de privacidad</a> y acepto que me contactéis para darme de alta.</span></label>
+            <p class="form-error" id="err" role="alert" hidden></p>
+            <div class="hero-actions" style="margin-top:0.5rem">
+              <button class="btn btn--primary" type="submit" data-via="wa">Enviar por WhatsApp</button>
+              <button class="btn btn--quiet" type="submit" data-via="mail">Enviar por correo</button>
+            </div>
+            <p class="note">Se abre WhatsApp o tu correo con la solicitud ya escrita. Solo tienes que darle a enviar. Esta web no guarda tus datos.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script define:vars={{ wa: SITE.whatsapp, mail: SITE.emailInfo }}>
+    const form = document.getElementById('alta');
+    const err = document.getElementById('err');
+    let via = 'wa';
+    form.querySelectorAll('button[data-via]').forEach((b) => b.addEventListener('click', () => { via = b.dataset.via; }));
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const bad = [...form.querySelectorAll('[required]')].filter((el) => (el.type === 'checkbox' ? !el.checked : !el.value.trim()));
+      form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
+      if (bad.length) {
+        bad.forEach((el) => el.setAttribute('aria-invalid', 'true'));
+        err.textContent = bad.some((el) => el.type === 'checkbox') && bad.length === 1 ? 'Marca la casilla de privacidad para seguir.' : 'Rellena los campos que faltan.';
+        err.hidden = false; bad[0].focus(); return;
+      }
+      err.hidden = true;
+      const f = new FormData(form);
+      const txt = [
+        'Hola, quiero darme de alta como cliente.',
+        `Local: ${f.get('negocio')} (${f.get('tipo')})`,
+        `Localidad: ${f.get('localidad')}`,
+        `Contacto: ${f.get('nombre')}, ${f.get('telefono')}`,
+        f.get('necesitas') ? `Suelo necesitar: ${f.get('necesitas')}` : '',
+      ].filter(Boolean).join('\n');
+      const url = via === 'wa'
+        ? `https://wa.me/${wa}?text=${encodeURIComponent(txt)}`
+        : `mailto:${mail}?subject=${encodeURIComponent('Alta de cliente: ' + f.get('negocio'))}&body=${encodeURIComponent(txt)}`;
+      window.location.href = url;
+    });
+  </script>
+</Base>

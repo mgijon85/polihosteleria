@@ -1,0 +1,35 @@
+---
+import Guia from '../../layouts/Guia.astro';
+const faq = [
+  { q: '¿Qué vajilla aguanta mejor en hostelería?', a: 'La porcelana de uso profesional, con el borde reforzado y cocida a alta temperatura, es la que mejor aguanta golpes y lavavajillas industrial. El gres da un aspecto más artesanal pero suele astillarse antes en el borde.' },
+  { q: '¿Cuántos platos necesito por cubierto?', a: 'Cuenta las piezas de cada tipo que usa un cubierto en tu carta y multiplícalo por las mesas llenas de un servicio. Después suma un margen para lo que está lavándose y lo que se rompe.' },
+  { q: '¿Puedo reponer las piezas sueltas?', a: 'Sí, si eliges un modelo que tu proveedor tenga de forma continuada. Pregúntalo antes de comprar: cambiar de modelo a mitad de temporada deja la sala con platos distintos.' },
+];
+---
+<Guia slug="vajilla-para-hosteleria" faq={faq}>
+  <p>La vajilla de un bar no se elige por foto. Se elige por cómo aguanta el lavavajillas, cuánto pesa en la bandeja y si dentro de seis meses podrás reponer el mismo plato.</p>
+
+  <h2>Material</h2>
+  <ul>
+    <li><strong>Porcelana profesional:</strong> la opción más resistente para uso diario. Borde reforzado, blanca y fácil de reponer.</li>
+    <li><strong>Gres:</strong> acabado artesanal y colores. Bonita en presentación, pero más delicada en el borde.</li>
+    <li><strong>Vidrio templado:</strong> ligero y muy resistente a golpes, típico en desayunos y colectividades.</li>
+  </ul>
+
+  <h2>Forma</h2>
+  <p>Los platos apilables ocupan menos y se rompen menos al guardarlos. Los bordes anchos lucen la ración pero ocupan más en el lavavajillas y en la estantería. Para tapas, los platos pequeños rectangulares o redondos de 15 a 20 cm son los que más rotan.</p>
+
+  <h2>Cantidad</h2>
+  <p>Calcula por cubierto y por servicio, con el lavavajillas en marcha: mientras una tanda está en la mesa, otra se está lavando. A eso súmale la reposición, porque la vajilla se rompe y desaparece a un ritmo constante.</p>
+
+  <h2>Reposición</h2>
+  <p>Es la parte que más se olvida al comprar. Elige un modelo de catálogo continuo y pide que te lo dejen apuntado en tu ficha de cliente. Así repones el mismo plato por WhatsApp sin tener que buscar la referencia.</p>
+
+  <h2>Cuidado</h2>
+  <ul>
+    <li>Usa el detergente y el abrillantador adecuados para tu lavavajillas y tu agua.</li>
+    <li>No mezcles vajilla y cubiertos en el mismo cestillo.</li>
+    <li>Retira los platos desconchados: el borde roto se sigue rompiendo.</li>
+  </ul>
+  <p>Mira la <a class="link" href="/catalogo/menaje-y-vajilla/">vajilla y el menaje</a> que llevamos a bares, restaurantes y hoteles de Huelva.</p>
+</Guia>

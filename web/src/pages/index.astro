@@ -1,0 +1,518 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE, CTA, FAMILIAS, waLink } from '../data/site';
+
+const title = 'Material de hostelería en Huelva | Polihostelería';
+const description = 'Distribuidor de material de hostelería en Huelva. Menaje, cristalería, celulosa, limpieza, maquinaria y mobiliario para bares, restaurantes y hoteles, con reparto propio.';
+const lineas = [
+  { at: 1, t: '23:41', q: '2 cj', d: 'Servilleta 2 capas 33×33' },
+  { at: 2, t: '23:42', q: '2 cj', d: 'Vaso caña 20 cl' },
+  { at: 3, t: '23:43', q: '1 gfa', d: 'Lavavajillas 5 L' },
+];
+const estados = [
+  { at: 410, t: '06:30', d: 'Preparado · 4 bultos' },
+  { at: 515, t: '08:15', d: 'Cargado · ruta Costa oeste' },
+  { at: 665, t: '10:45', d: 'Entregado en barra' },
+];
+---
+<Base variant="home" title={title} description={description}>
+  <Fragment slot="head">
+    <link rel="preload" as="image" href="/scrollcraft/home/noche-1920.webp" media="(min-width: 861px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/scrollcraft/home/noche-960.webp" media="(max-width: 860px)" fetchpriority="high" />
+    <link rel="stylesheet" href="/scrollcraft/scrollcraft.css" />
+    <style is:global>
+      :root {
+        --sc-canvas: #0D1522; --sc-surface: #16202F;
+        --sc-ink: #EEF2F7; --sc-ink-soft: #A3B1C3;
+        --sc-accent: #79B0F2; --sc-accent-ink: #0D1522;
+        --sc-font-display: 'Archivo Variable', 'Archivo', system-ui, sans-serif;
+        --sc-font-text: 'Geist Variable', 'Geist', system-ui, sans-serif;
+        --split: 0.5;
+        --sx: calc(var(--split) * 100%);
+        --sy: calc(var(--split) * 100%);
+        --day: #F3F5F7; --day-ink: #14202E; --day-soft: #4F5D6E; --day-accent: #0A63C9;
+        --alb-w: 252px;
+      }
+      body.is-home { background: var(--noche); color: var(--noche-ink); font-family: var(--font-text); }
+      .is-home ::selection { background: var(--brand); color: #fff; }
+
+      /* cabecera de la home: no es una barra, flota sobre el escenario */
+      .site-head--home .wrap { max-width: none; }
+      .site-head--home .head-actions { margin-left: auto; }
+      .site-head--home { position: absolute; inset: 0 0 auto 0; background: transparent; border: 0; backdrop-filter: none; -webkit-backdrop-filter: none; }
+      .site-head--home .brand span { color: var(--noche-ink); }
+      .site-head--home .brand img { filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.35)); }
+      .site-head--home .menu-btn { display: inline-flex; background: rgb(255 255 255 / 0.9); color: var(--day-ink); }
+      .site-head--home .btn--primary { box-shadow: 0 2px 10px rgb(10 99 201 / 0.35); }
+
+      /* ------------------------------------------------ escenario partido */
+      .ph-stage { background: var(--noche); }
+      .ph-layer { position: absolute; inset: 0; overflow: hidden; }
+      .ph-night { z-index: 1; background: var(--noche); color: var(--noche-ink); clip-path: inset(0 calc(100% - var(--sx)) 0 0); }
+      .ph-day { z-index: 1; background: var(--day); color: var(--day-ink); clip-path: inset(0 0 0 var(--sx)); }
+      .ph-day :focus-visible { outline-color: var(--day-accent); }
+      .ph-night :focus-visible { outline-color: var(--noche-accent); }
+      .ph-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; max-width: none; }
+
+      /* las columnas viajan con el divisor */
+      .ph-col { position: absolute; z-index: 4; top: 0; bottom: 0; width: 50vw; transform: translate3d(calc((var(--split) - 0.5) * 100vw), 0, 0); }
+      .ph-col--n { left: 0; transform: none; }
+      .ph-col--d { left: 50vw; }
+      .ph-pad-n { position: absolute; left: var(--sc-gutter); right: calc(var(--alb-w) / 2 + 2.25rem); }
+      .ph-pad-d { position: absolute; left: calc(var(--alb-w) / 2 + 2.25rem); right: var(--sc-gutter); }
+
+      .ph-line { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em; line-height: 1.02; text-wrap: balance; margin: 0;
+        font-size: clamp(2.2rem, 1.2rem + 2.6vw, 3.9rem); }
+      .ph-h2 { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.025em; line-height: 1.04; text-wrap: balance; margin: 0;
+        font-size: clamp(1.9rem, 1.1rem + 2vw, 3.1rem); }
+      .ph-p { font-size: clamp(1.02rem, 0.95rem + 0.3vw, 1.2rem); line-height: 1.55; max-width: 38ch; margin-top: 1rem; }
+      .ph-night .ph-p { color: var(--noche-soft); }
+      .ph-day .ph-p { color: var(--day-soft); }
+      .ph-tag { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+      .ph-night .ph-tag { color: var(--noche-accent); }
+      .ph-day .ph-tag { color: var(--day-accent); }
+      .ph-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; margin-top: 1.5rem; }
+      .ph-actions .tlink { color: var(--day-ink); font-weight: 600; text-decoration: none; font-size: 0.98rem; }
+      @media (hover: hover) { .ph-actions .tlink:hover { text-decoration: underline; } }
+
+      /* acto 1 */
+      .ph-persiana {
+        position: absolute; left: 0; right: 0; top: 0; height: 64%; z-index: 2;
+        background:
+          linear-gradient(to bottom, transparent calc(100% - 18px), #5D6878 calc(100% - 18px), #3A4452 100%),
+          repeating-linear-gradient(to bottom, #8E99A8 0 2px, #6D7889 2px 13px, #4D5767 13px 15px, #7C8798 15px 16px);
+        box-shadow: 0 14px 30px rgb(0 0 0 / 0.45);
+        transform: translate3d(0, calc(-100% + var(--sc-p, 0) * 46%), 0);
+      }
+      .ph-glow { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+        background: radial-gradient(38vmax 30vmax at 42% 40%, rgb(255 196 120 / 0.10), transparent 70%); }
+      .ph-shade-n { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+        background: linear-gradient(to top, rgb(13 21 34 / 0.92) 0%, rgb(13 21 34 / 0.55) 32%, transparent 60%); }
+      .ph-1-n { bottom: clamp(3rem, 11vh, 7rem); z-index: 3; }
+      .ph-1-d { bottom: clamp(3rem, 11vh, 7rem); z-index: 3; }
+      .ph-shade-d { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+        background: linear-gradient(to top, rgb(243 245 247 / 0.97) 0%, rgb(243 245 247 / 0.86) 30%, rgb(243 245 247 / 0.3) 52%, transparent 66%); }
+      .ph-sun { position: absolute; inset: 0; z-index: 1; pointer-events: none; mix-blend-mode: screen;
+        background: linear-gradient(115deg, transparent 30%, rgb(255 226 170 / 0.16) 48%, transparent 64%);
+        transform: translate3d(calc(var(--sc-p, 0) * -6%), 0, 0); }
+      .ph-vaso-fg { position: absolute; z-index: 2; right: -4vw; bottom: -8vh; width: min(30vw, 440px); filter: blur(2px) drop-shadow(0 20px 30px rgb(20 32 46 / 0.25)); opacity: 0.9; max-width: none; }
+
+      /* acto 2 */
+      .ph-2-n { top: calc(var(--header-h) + 10vh); }
+      .ph-wave { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 1.4rem; }
+      .ph-wave svg { width: 200px; height: 36px; color: var(--noche-accent); }
+      .ph-quote { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em; line-height: 1.12; font-size: clamp(1.7rem, 1.05rem + 1.7vw, 2.7rem); margin: 0; text-wrap: balance; max-width: 22ch; }
+      .ph-2-n2 { bottom: clamp(2.5rem, 9vh, 6rem); }
+      .ph-almacen { position: absolute; left: 50vw; right: 0; top: 0; bottom: 0; transform: translate3d(calc((var(--split) - 0.5) * 100vw), 0, 0); }
+      .ph-almacen img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
+      .ph-2-d1 { top: calc(var(--header-h) + 10vh); }
+      .ph-2-d2 { bottom: clamp(2.5rem, 9vh, 6rem); z-index: 3; }
+      .ph-shade-alm { position: absolute; inset: 0; z-index: 2; pointer-events: none;
+        background: linear-gradient(to top, rgb(243 245 247 / 0.96) 0%, rgb(243 245 247 / 0.78) 26%, transparent 48%); }
+
+      /* acto 3 */
+      .ph-3-n { top: calc(var(--header-h) + 8vh); }
+      .ph-fams { list-style: none; padding: 0; margin: 1.6rem 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0; max-width: 34rem; border-top: 1px solid rgb(238 242 247 / 0.14); }
+      .ph-fams li { border-bottom: 1px solid rgb(238 242 247 / 0.14); }
+      .ph-fams a { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; padding: 0.72rem 0.25rem; color: var(--noche-ink); text-decoration: none; font-size: 0.98rem; min-height: 44px; }
+      .ph-fams li:nth-child(odd) a { padding-right: 1rem; }
+      .ph-fams a span { font-size: 0.72rem; color: var(--noche-soft); font-variant-numeric: tabular-nums; letter-spacing: 0.06em; }
+      @media (hover: hover) { .ph-fams a:hover { color: var(--noche-accent); } }
+      .ph-3-day { background: #E9EDF1; }
+      .ph-prod { position: absolute; max-width: none; }
+      .ph-platos { right: 2.5vw; top: calc(var(--header-h) + 5vh); width: min(14vw, 220px); filter: drop-shadow(0 30px 40px rgb(20 32 46 / 0.22)); }
+      .ph-vasos { right: -3vw; bottom: -5vh; width: min(24vw, 380px); filter: drop-shadow(0 26px 34px rgb(20 32 46 / 0.2)); z-index: 2; }
+      .ph-3-d { bottom: clamp(2.5rem, 9vh, 6rem); right: 44%; z-index: 3; }
+      .ph-links { display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem; margin-top: 1.2rem; }
+      .ph-links a { color: var(--day-accent); font-weight: 600; text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; }
+      @media (hover: hover) { .ph-links a:hover { text-decoration: underline; } }
+
+      /* acto 4 */
+      .ph-ruta :is(video[data-sc-scrub], .sc-stage__poster) { transform: translate3d(14%, 0, 0) scale(1.06); transform-origin: 50% 50%; }
+      .ph-shade-ruta { position: absolute; inset: 0; z-index: 2; pointer-events: none;
+        background: linear-gradient(to top, rgb(9 14 22 / 0.9) 0%, rgb(9 14 22 / 0.62) 28%, transparent 52%); }
+      .ph-4-d { bottom: clamp(2.5rem, 9vh, 6rem); z-index: 3; color: #F5F7FA; }
+      .ph-4-d .ph-p { color: #DCE3EC; }
+      .ph-4-n { bottom: clamp(2.5rem, 9vh, 6rem); }
+      .ph-zonas { list-style: none; padding: 0; margin: 0.9rem 0 0; display: grid; gap: 0.3rem; font-size: 0.95rem; color: var(--noche-soft); }
+
+      /* acto 5 */
+      .ph-5-bg { transform: scale(calc(1.07 - var(--sc-p, 0) * 0.07)); transform-origin: 40% 40%; }
+      .ph-shade-close { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+        background: linear-gradient(to left, rgb(243 245 247 / 0.98) 0%, rgb(243 245 247 / 0.95) 26%, rgb(243 245 247 / 0.66) 35%, transparent 43%); }
+      .ph-close { position: absolute; z-index: 3; right: var(--sc-gutter); top: 50%; translate: 0 -54%; width: min(30rem, 32vw); }
+      .ph-close .ph-h2 { font-size: clamp(2.1rem, 1.2rem + 2.4vw, 3.6rem); }
+      .ph-5-n { bottom: clamp(3rem, 11vh, 7rem); }
+      .ph-foot { position: absolute; z-index: 3; left: 0; right: 0; bottom: 0; padding: 0.9rem var(--sc-gutter) calc(0.9rem + env(safe-area-inset-bottom));
+        display: flex; flex-wrap: wrap; gap: 0.35rem 1.2rem; font-size: 0.82rem; color: var(--day-soft);
+        background: rgb(243 245 247 / 0.97); border-top: 1px solid rgb(20 32 46 / 0.07); }
+      .ph-foot a { color: var(--day-ink); text-decoration: none; }
+      @media (hover: hover) { .ph-foot a:hover { text-decoration: underline; } }
+      .ph-foot .sep { margin-left: auto; }
+      .ph-alb-inline { display: none; }
+
+      /* -------------------------------------------- divisor (el cromo) */
+      .ph-divider { position: fixed; z-index: 30; top: 0; bottom: 0; left: 0; width: 0; pointer-events: none;
+        transform: translate3d(calc(var(--split) * 100vw), 0, 0); opacity: var(--div-o, 1); }
+      .ph-divider::before { content: ""; position: absolute; top: calc(var(--header-h) + 3.6rem); bottom: 0; left: -0.5px; width: 1px;
+        background: linear-gradient(to bottom, rgb(255 255 255 / 0.5), rgb(255 255 255 / 0.25)); box-shadow: 0 0 0 0.5px rgb(13 21 34 / 0.12); }
+      .ph-clock { position: absolute; top: calc(var(--header-h) + 0.6rem); left: 0; translate: -50% 0; display: flex; align-items: center; gap: 0.65rem;
+        padding: 0.3rem 0.45rem 0.3rem 0.85rem; border-radius: 999px; background: rgb(13 21 34 / 0.86); color: var(--noche-ink);
+        box-shadow: 0 6px 20px rgb(0 0 0 / 0.25); white-space: nowrap; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+      .ph-clock__l { font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--noche-soft); }
+      .ph-clock__t { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; font-variant-numeric: tabular-nums; letter-spacing: -0.01em;
+        background: #F3F5F7; color: var(--day-ink); border-radius: 999px; padding: 0.12rem 0.65rem; }
+      .ph-clock__r { font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: #CFE0F5; padding-right: 0.35rem; }
+
+      /* ----------------------------------------- el albarán que se escribe */
+      .ph-alb { position: fixed; z-index: 31; left: 0; top: 0; width: var(--alb-w);
+        transform: translate3d(var(--ax, 50vw), var(--ay, 60vh), 0) translate(-50%, -50%) scale(var(--as, 1)); transform-origin: 50% 50%;
+        background: #FFFEFB; color: #1F2733; border-radius: 6px; padding: 0.95rem 1rem 1rem;
+        box-shadow: 0 2px 4px rgb(13 21 34 / 0.18), 0 18px 40px -8px rgb(13 21 34 / 0.45);
+        font-size: 0.8rem; line-height: 1.35; }
+      .ph-alb::before { content: ""; position: absolute; left: 0; right: 0; top: -6px; height: 6px;
+        background: radial-gradient(circle at 6px 6px, transparent 4px, #FFFEFB 4.5px) -6px 0 / 12px 6px repeat-x; }
+      .ph-alb__h img { width: 30px; height: auto; margin-right: 0.45rem; align-self: center; }
+      .ph-alb__h b { margin-right: auto; }
+      .ph-alb__h { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px dashed #C9CED6; padding-bottom: 0.5rem; }
+      .ph-alb__h b { font-family: var(--font-display); font-size: 0.95rem; letter-spacing: 0.02em; text-transform: uppercase; }
+      .ph-alb__h span { font-size: 0.68rem; color: #6B7482; text-transform: uppercase; letter-spacing: 0.08em; }
+      .ph-alb__c { margin: 0.5rem 0 0.35rem; color: #4A5462; }
+      .ph-alb ol { list-style: none; margin: 0; padding: 0; }
+      .ph-alb li { display: none; grid-template-columns: 2.6rem 2.4rem 1fr; gap: 0.25rem; padding: 0.22rem 0; font-variant-numeric: tabular-nums; }
+      .ph-alb li.on { display: grid; animation: ph-in 300ms var(--ease) both; }
+      @keyframes ph-in { from { opacity: 0; transform: translate3d(0, 5px, 0); } to { opacity: 1; transform: none; } }
+      .ph-alb .est:not(:has(li.on)) { display: none; }
+      .ph-alb li .t { color: #8A93A1; }
+      .ph-alb li .q { font-weight: 600; }
+      .ph-alb .est { border-top: 1px dashed #C9CED6; margin-top: 0.35rem; padding-top: 0.35rem; }
+      .ph-alb .est li { grid-template-columns: 2.6rem 1fr; }
+      .ph-alb .est li .d { font-weight: 600; color: #0A4F9E; }
+      .ph-alb__empty { color: #8A93A1; font-style: italic; padding: 0.25rem 0; transition: opacity 200ms; }
+      .ph-alb.has-lines .ph-alb__empty { display: none; }
+      .ph-sello { position: absolute; right: 0.6rem; bottom: 0.9rem; padding: 0.3rem 0.6rem; border: 2.5px solid #1F7A3D; border-radius: 6px;
+        color: #1F7A3D; font-family: var(--font-display); font-weight: 800; letter-spacing: 0.06em; font-size: 0.95rem; line-height: 1.1; text-align: center;
+        opacity: 0; transform: rotate(-9deg) scale(1.35); transition: opacity 220ms var(--ease), transform 320ms var(--ease); background: rgb(255 254 251 / 0.6); }
+      .ph-sello small { display: block; font-size: 0.7rem; letter-spacing: 0.04em; font-weight: 700; }
+      .ph-alb.sellado .ph-sello { opacity: 0.92; transform: rotate(-9deg) scale(1); }
+
+      /* ------------------------------------------------------------ móvil */
+      @media (max-width: 860px) {
+        :root { --alb-w: 0px; }
+        .ph-night { clip-path: inset(0 0 calc(100% - var(--sy)) 0); }
+        .ph-day { clip-path: inset(var(--sy) 0 0 0); }
+        .ph-col { left: 0; right: 0; width: auto; top: 0; bottom: auto; height: 50svh; transform: translate3d(0, calc((var(--split) - 0.5) * 100svh), 0); }
+        .ph-col--d { top: 50svh; }
+        .ph-pad-n, .ph-pad-d { left: var(--sc-gutter); right: var(--sc-gutter); }
+        .ph-media-d { top: 50%; }
+        .ph-day .ph-bg.ph-media-d { height: 50%; }
+        .ph-1-n { bottom: 2.4rem; }
+        .ph-1-d { bottom: auto; top: 2.6rem; }
+        .ph-line { font-size: clamp(1.7rem, 1.2rem + 2.6vw, 2.4rem); }
+        .ph-h2 { font-size: clamp(1.55rem, 1.1rem + 2.4vw, 2.1rem); }
+        .ph-p { font-size: 0.98rem; margin-top: 0.6rem; }
+        .ph-actions { margin-top: 1rem; }
+        .ph-shade-d { background: linear-gradient(to bottom, rgb(243 245 247 / 0.97) 0%, rgb(243 245 247 / 0.9) 62%, rgb(243 245 247 / 0.55) 100%); }
+        .ph-vaso-fg { display: none; }
+        .ph-persiana { height: 58%; }
+        .ph-2-n { top: calc(var(--header-h) + 1rem); }
+        .ph-quote { font-size: clamp(1.3rem, 1rem + 2vw, 1.7rem); }
+        .ph-wave { margin-bottom: 0.8rem; }
+        .ph-wave svg { width: 140px; height: 28px; }
+        .ph-2-n2 { display: none; }
+        .ph-almacen { left: 0; top: 50%; transform: none; }
+        .ph-2-d1 { top: 1.6rem; }
+        .ph-2-d2 { bottom: 1.6rem; }
+        .ph-3-n { top: calc(var(--header-h) + 0.5rem); }
+        .ph-fams { grid-template-columns: 1fr 1fr; margin-top: 0.8rem; }
+        .ph-fams a { padding: 0.35rem 0.1rem; font-size: 0.86rem; min-height: 40px; }
+        .ph-fams a span { display: none; }
+        .ph-3-n .ph-p { display: none; }
+        .ph-platos { right: 6vw; top: calc(50% + 2rem); width: 30vw; }
+        .ph-vasos { right: -6vw; bottom: -3vh; width: 52vw; }
+        .ph-3-d { right: 38%; bottom: 1.4rem; }
+        .ph-3-d .ph-p { display: none; }
+        .ph-ruta :is(video[data-sc-scrub], .sc-stage__poster) { top: 50%; height: 50%; transform: none; object-position: 38% 50%; }
+        .ph-shade-ruta { top: 50%; background: linear-gradient(to top, rgb(9 14 22 / 0.94) 0%, rgb(9 14 22 / 0.82) 38%, rgb(9 14 22 / 0.35) 62%, transparent 80%); }
+        .ph-night .ph-bg, .ph-shade-n, .ph-night .ph-glow { height: 50%; bottom: auto; }
+        .ph-4-d { bottom: 1.4rem; }
+        .ph-4-n { bottom: 2rem; }
+        .ph-5-bg { object-position: 50% 30%; transform-origin: 50% 30%; }
+        .ph-shade-close { background: linear-gradient(to top, rgb(243 245 247 / 0.98) 0%, rgb(243 245 247 / 0.94) 46%, rgb(243 245 247 / 0.4) 62%, transparent 74%); }
+        .ph-close { left: var(--sc-gutter); right: var(--sc-gutter); width: auto; top: auto; bottom: 4.6rem; translate: none; }
+        .ph-foot { font-size: 0.76rem; padding-block: 0.6rem; }
+        .ph-foot .opt { display: none; }
+        .ph-alb-inline { display: flex; align-items: center; gap: 0.6rem; margin-top: 1rem; font-size: 0.82rem; color: var(--day-soft); }
+        .ph-alb-inline b { color: #1F7A3D; border: 2px solid #1F7A3D; border-radius: 5px; padding: 0.05rem 0.4rem; transform: rotate(-6deg); font-family: var(--font-display); letter-spacing: 0.05em; }
+        .ph-divider::before { top: 0; bottom: auto; left: 0; width: 100vw; height: 1px; transform: translate3d(0, calc(var(--split) * 100svh), 0); }
+        .ph-divider { transform: none; width: 100vw; }
+        .ph-clock { top: calc(var(--split) * 100svh); left: 50vw; translate: -50% -50%; }
+        .ph-alb { display: none; }
+      }
+      @media (max-width: 380px) { .ph-clock__l, .ph-clock__r { display: none; } }
+      @media (prefers-reduced-motion: reduce) {
+        .ph-persiana, .ph-sun, .ph-5-bg { transform: none !important; }
+        .ph-persiana { display: none; }
+        .ph-2-d1 { display: none; }
+        .ph-alb li.on { animation: none; } .ph-sello { transition: none; }
+      }
+    </style>
+  </Fragment>
+
+  <div class="ph-divider" aria-hidden="true">
+    <div class="ph-clock"><span class="ph-clock__l">Tu noche</span><span class="ph-clock__t" data-clock>23:40</span><span class="ph-clock__r">Tu mañana</span></div>
+  </div>
+
+  <aside class="ph-alb" data-alb aria-label="Albarán de ejemplo de un pedido">
+    <div class="ph-alb__h"><img src="/img/logo.png" width="280" height="255" alt="" /><b>Albarán</b><span>Ejemplo</span></div>
+    <p class="ph-alb__c">Bar La Ribera · Isla Cristina</p>
+    <p class="ph-alb__empty">Sin pedido todavía</p>
+    <ol>{lineas.map((l) => <li data-at={l.at}><span class="t">{l.t}</span><span class="q">{l.q}</span><span>{l.d}</span></li>)}</ol>
+    <ol class="est">{estados.map((e) => <li data-at={e.at}><span class="t">{e.t}</span><span class="d">{e.d}</span></li>)}</ol>
+    <div class="ph-sello" aria-hidden="true">ENTREGADO<small>10:45</small></div>
+  </aside>
+
+  <main id="top" class="ph">
+
+    <!-- 1 · RECONOCIMIENTO: las dos frases a la vez -->
+    <section data-sc-act="pin" data-sc-span="1.8" data-ph-act="1">
+      <div data-sc-stage class="ph-stage">
+        <div class="ph-layer ph-night">
+          <img class="ph-bg" src="/scrollcraft/home/noche-1920.webp" srcset="/scrollcraft/home/noche-960.webp 960w, /scrollcraft/home/noche-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="Interior de un bar cerrado de noche, con las sillas sobre las mesas y una lámpara encendida sobre la barra" fetchpriority="high" />
+          <div class="ph-glow" aria-hidden="true"></div>
+          <div class="ph-persiana" aria-hidden="true"></div>
+          <div class="ph-shade-n" aria-hidden="true"></div>
+          <div class="ph-col ph-col--n">
+            <div class="ph-pad-n ph-1-n" data-sc-cue="0 0.92 0">
+              <p class="ph-line">Cierras a las 23:40 y ves que mañana no hay servilletas.</p>
+            </div>
+          </div>
+        </div>
+        <div class="ph-layer ph-day">
+          <img class="ph-bg ph-media-d" src="/scrollcraft/home/manana-1920.webp" srcset="/scrollcraft/home/manana-960.webp 960w, /scrollcraft/home/manana-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="" loading="eager" />
+          <div class="ph-sun" aria-hidden="true"></div>
+          <img class="ph-vaso-fg" src="/scrollcraft/home/vasos-900.webp" width="900" height="675" alt="" data-sc-parallax="1.6" />
+          <div class="ph-shade-d" aria-hidden="true"></div>
+          <div class="ph-col ph-col--d">
+            <div class="ph-pad-d ph-1-d" data-sc-cue="0 0.92 0">
+              <h1 class="ph-line">A las 10:45 ya están en tu barra.</h1>
+              <p class="ph-p">Polihostelería es el distribuidor de material de hostelería de Huelva. Pides cuando te viene bien y te lo llevamos en nuestras furgonetas.</p>
+              <div class="ph-actions"><a class="btn btn--primary" href={CTA.href}>{CTA.label}</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 · ALIVIO: el audio se escribe, el almacén se descubre -->
+    <section data-sc-act="pin" data-sc-span="2.4" data-ph-act="2">
+      <div data-sc-stage class="ph-stage">
+        <div class="ph-layer ph-night">
+          <div class="ph-glow" aria-hidden="true"></div>
+          <div class="ph-col ph-col--n">
+            <div class="ph-pad-n ph-2-n">
+              <div class="ph-wave" data-sc-cue="0 0.94 0">
+                <svg viewBox="0 0 200 36" aria-hidden="true"><g fill="currentColor">{Array.from({ length: 34 }).map((_, i) => { const h = 6 + Math.round(Math.abs(Math.sin(i * 1.7) * 22 + Math.cos(i * 0.6) * 6)); return <rect x={i * 6} y={18 - h / 2} width="3" height={h} rx="1.5" />; })}</g></svg>
+                <span class="ph-tag">Nota de voz · 0:12</span>
+              </div>
+              <blockquote class="ph-quote" data-sc-cue="0.06 0.94" data-sc-kinetic="lines">«Buenas, mándame lo de siempre y dos cajas más de vasos de caña, que el finde viene gente.»</blockquote>
+            </div>
+            <div class="ph-pad-n ph-2-n2" data-sc-cue="0.42 0.96">
+              <p class="ph-p" style="max-width:34ch">Ni llamadas a deshoras ni papelitos en la caja. Lo pides por WhatsApp, con un audio, por teléfono o a tu comercial.</p>
+            </div>
+          </div>
+        </div>
+        <div class="ph-layer ph-day">
+          <figure class="ph-almacen" data-sc-reveal="down" data-sc-reveal-at="0.34 0.74" style="margin:0">
+            <img src="/scrollcraft/home/almacen-marca-1100.webp" srcset="/scrollcraft/home/almacen-marca-700.webp 700w, /scrollcraft/home/almacen-marca-1100.webp 1100w" sizes="(max-width: 860px) 100vw, 50vw" width="1100" height="1467" alt="Mozo de almacén de Polihostelería preparando un palé de cajas al amanecer" loading="lazy" />
+          </figure>
+          <div class="ph-shade-alm" aria-hidden="true" data-sc-reveal="down" data-sc-reveal-at="0.34 0.74"></div>
+          <div class="ph-col ph-col--d">
+            <div class="ph-pad-d ph-2-d1" data-sc-cue="0 0.5 0">
+              <p class="ph-h2">Mientras duermes, tu pedido ya está apuntado.</p>
+            </div>
+            <div class="ph-pad-d ph-2-d2" data-sc-cue="0.5 0.98">
+              <p class="ph-h2">06:30. Se prepara en el almacén, por rutas, antes de que abras.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · CONFIANZA: lo que hay y lo que pesa -->
+    <section data-sc-act="pin" data-sc-span="1.8" data-ph-act="3">
+      <div data-sc-stage class="ph-stage">
+        <div class="ph-layer ph-night">
+          <div class="ph-col ph-col--n">
+            <div class="ph-pad-n ph-3-n">
+              <h2 class="ph-h2" data-sc-cue="0 0.95 0">Lo que te llevamos</h2>
+              <div data-sc-cue="0.04 0.95">
+                <p class="ph-p">Lo que gasta un bar cada semana y lo que necesita una vez en la vida.</p>
+                <ul class="ph-fams">
+                  {FAMILIAS.map((f, i) => <li><a href={`/catalogo/${f.slug}/`}>{f.nombre}<span>{String(i + 1).padStart(2, '0')}</span></a></li>)}
+                  <li><a href="/catalogo/">Todo el catálogo<span>→</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ph-layer ph-day ph-3-day">
+          <img class="ph-prod ph-platos" src="/scrollcraft/home/platos-700.webp" srcset="/scrollcraft/home/platos-420.webp 420w, /scrollcraft/home/platos-700.webp 700w" sizes="18vw" width="700" height="933" alt="" loading="lazy" data-sc-parallax="-0.9" />
+          <img class="ph-prod ph-vasos" src="/scrollcraft/home/vasos-900.webp" srcset="/scrollcraft/home/vasos-560.webp 560w, /scrollcraft/home/vasos-900.webp 900w" sizes="30vw" width="900" height="675" alt="" loading="lazy" data-sc-parallax="1.4" />
+          <div class="ph-col ph-col--d">
+            <div class="ph-pad-d ph-3-d" data-sc-cue="0 0.95 0">
+              <h2 class="ph-h2">Del vaso de caña a la cámara frigorífica.</h2>
+              <p class="ph-p">Reposición de lo que gastas cada semana, montaje completo de bares, cafeterías y cocinas, y servicio técnico para tu maquinaria.</p>
+              <div class="ph-links"><a href="/montaje-de-locales/">Montaje de locales</a><a href="/servicio-tecnico/">Servicio técnico</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · EXPECTACIÓN: la furgoneta avanza bajo la mano. La noche se queda casi en silencio a propósito. -->
+    <section data-sc-act="scrub" data-sc-span="2.2" data-sc-dwell="0.22" data-ph-act="4" class="ph-ruta">
+      <div data-sc-stage class="ph-stage">
+        <div class="ph-layer ph-night">
+          <div class="ph-col ph-col--n">
+            <div class="ph-pad-n ph-4-n" data-sc-cue="0.18 0.96">
+              <p class="ph-tag">Rutas de reparto</p>
+              <ul class="ph-zonas"><li>Huelva capital</li><li>Costa oeste</li><li>Costa este</li><li>Condado</li><li>Sierra</li></ul>
+            </div>
+          </div>
+        </div>
+        <div class="ph-layer ph-day">
+          <img class="sc-stage__poster" src="/scrollcraft/home/ruta-marca-poster.webp" srcset="/scrollcraft/home/ruta-marca-poster-m.webp 900w, /scrollcraft/home/ruta-marca-poster.webp 1600w" sizes="100vw" width="1600" height="900" alt="" loading="lazy" />
+          <video data-sc-scrub data-sc-src="/scrollcraft/home/ruta-marca.mp4" data-sc-src-mobile="/scrollcraft/home/ruta-marca-m.mp4" muted playsinline aria-hidden="true"></video>
+          <div class="ph-shade-ruta" aria-hidden="true"></div>
+          <div class="ph-col ph-col--d">
+            <div class="ph-pad-d ph-4-d" data-sc-cue="0.1 0.95">
+              <h2 class="ph-h2">08:15. Sale la furgoneta hacia tu zona.</h2>
+              <p class="ph-p">Repartidores y furgonetas propias por Huelva capital, la Costa, el Condado y la Sierra.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · RESOLUCIÓN: amanece, la noche se va y el albarán se sella -->
+    <section id="cliente" data-sc-act="pin" data-sc-span="2.8" data-ph-act="5">
+      <div data-sc-stage class="ph-stage">
+        <div class="ph-layer ph-night">
+          <img class="ph-bg" src="/scrollcraft/home/noche-1920.webp" srcset="/scrollcraft/home/noche-960.webp 960w, /scrollcraft/home/noche-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="" loading="lazy" />
+          <div class="ph-shade-n" aria-hidden="true"></div>
+          <div class="ph-col ph-col--n">
+            <div class="ph-pad-n ph-5-n" data-sc-cue="0 0.3 0">
+              <p class="ph-line">Tú, a esa hora, durmiendo.</p>
+            </div>
+          </div>
+        </div>
+        <div class="ph-layer ph-day">
+          <img class="ph-bg ph-5-bg" src="/scrollcraft/home/entrega-1920.webp" srcset="/scrollcraft/home/entrega-960.webp 960w, /scrollcraft/home/entrega-1920.webp 1920w" sizes="100vw" width="1920" height="1086" alt="Un repartidor de Polihostelería entrega una caja al dueño del bar, que la recoge sonriendo detrás de la barra" loading="lazy" />
+          <div class="ph-shade-close" aria-hidden="true"></div>
+          <div class="ph-close">
+            <h2 class="ph-h2" data-sc-cue="0.4">Pide cuando cierres. Por la mañana, en tu barra.</h2>
+            <div data-sc-cue="0.46">
+              <p class="ph-p">Te damos de alta, te dejamos tus precios y nos pides como prefieras. El reparto va según los días de tu zona.</p>
+              <div class="ph-actions">
+                <a class="btn btn--primary" href={CTA.href}>{CTA.label}</a>
+                <a class="tlink" href={waLink()}>Escribir por WhatsApp</a>
+                <a class="tlink" href={SITE.telefonoHref}>{SITE.telefono}</a>
+              </div>
+              <p class="ph-alb-inline"><b>ENTREGADO</b> 10:45 · Bar La Ribera, Isla Cristina (ejemplo)</p>
+            </div>
+          </div>
+          <nav class="ph-foot" aria-label="Pie" data-sc-cue="0.5">
+            <a href="/catalogo/">Catálogo</a>
+            <a href="/montaje-de-locales/">Montaje de locales</a>
+            <a href="/servicio-tecnico/">Servicio técnico</a>
+            <a href="/como-pedir/">Cómo pedir</a>
+            <a class="opt" href="/reparto/">Zonas de reparto</a>
+            <a class="opt" href="/guias/">Guías</a>
+            <a href="/contacto/">Contacto</a>
+            <span class="sep opt">{SITE.direccion.calle}, Huelva</span>
+            <a class="opt" href="/aviso-legal/">Aviso legal</a>
+            <a class="opt" href="/privacidad/">Privacidad</a>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script is:inline src="/scrollcraft/scrollcraft.js"></script>
+  <script is:inline>ScrollCraft.mount(document.body);</script>
+  <script is:inline>
+  (function () {
+    // El albarán que se escribe solo. La hora es el cabezal: cada acto lleva un tramo
+    // del reloj, y cada línea del albarán aparece cuando el reloj pasa su minuto.
+    var root = document.documentElement;
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var small = matchMedia('(max-width: 860px)');
+    var acts = Array.prototype.slice.call(document.querySelectorAll('[data-ph-act]'));
+    var alb = document.querySelector('[data-alb]');
+    var clock = document.querySelector('[data-clock]');
+    var items = alb ? Array.prototype.slice.call(alb.querySelectorAll('li[data-at]')).map(function (li) { return { el: li, at: +li.getAttribute('data-at'), on: false }; }) : [];
+    var clamp = function (x, a, b) { return x < a ? a : x > b ? b : x; };
+    var smooth = function (x) { x = clamp(x, 0, 1); return x * x * (3 - 2 * x); };
+    var map = function (p, a, b, c, d) { return c + (d - c) * clamp((p - a) / (b - a), 0, 1); };
+    function minutes(n, p) {
+      if (n === 1) return 0;
+      if (n === 2) return p < 0.36 ? map(p, 0.04, 0.36, 1, 3) : map(p, 0.36, 0.78, 3, 410);
+      if (n === 3) return map(p, 0, 1, 410, 515);
+      if (n === 4) return map(p, 0, 1, 515, 650);
+      return map(p, 0, 0.5, 650, 665);
+    }
+    function hhmm(m) {
+      m = Math.round(m);
+      var t = (23 * 60 + 40 + m) % (24 * 60);
+      var h = Math.floor(t / 60), mm = t % 60;
+      return (h < 10 ? '0' : '') + h + ':' + (mm < 10 ? '0' : '') + mm;
+    }
+    function actP(a) {
+      var v = parseFloat(a.style.getPropertyValue('--sc-p'));
+      if (!isNaN(v)) return v;
+      var r = a.getBoundingClientRect();
+      return clamp(-r.top / Math.max(r.height - innerHeight, 1), 0, 1);
+    }
+    var last = '';
+    function frame() {
+      var cur = 1, p = 0, ps = [];
+      for (var i = 0; i < acts.length; i++) {
+        var v = actP(acts[i]); ps.push(v);
+        var top = acts[i].getBoundingClientRect().top;
+        if (top <= 1) { cur = i + 1; p = v; }
+      }
+      var m = minutes(cur, p);
+      // el divisor: 50/50, la mañana gana algo en la ruta, y en el cierre la noche se va
+      var split = 0.5, dock = 0;
+      if (cur === 4) split = 0.5 - 0.12 * smooth(p);
+      if (cur === 5) { split = 0.38 * (1 - smooth(map(p, 0.04, 0.46, 0, 1))); dock = smooth(map(p, 0.08, 0.46, 0, 1)); }
+      if (reduce) { split = cur === 5 && p > 0.25 ? 0 : 0.5; dock = cur === 5 && p > 0.25 ? 1 : 0; }
+      root.style.setProperty('--split', split.toFixed(4));
+      root.style.setProperty('--div-o', (cur === 5 ? (1 - map(p, 0.2, 0.42, 0, 1)) * clamp(split / 0.16, 0, 1) : 1).toFixed(3));
+      // el albarán viaja con el divisor y, al amanecer, se queda sobre la barra
+      if (alb && !small.matches) {
+        var vw = innerWidth, vh = innerHeight;
+        var x = split * vw * (1 - dock) + (vw * 0.47) * dock;
+        var y = vh * 0.6 * (1 - dock) + vh * 0.8 * dock;
+        root.style.setProperty('--as', (1 - 0.14 * dock).toFixed(3));
+        root.style.setProperty('--ax', x.toFixed(1) + 'px');
+        root.style.setProperty('--ay', y.toFixed(1) + 'px');
+      }
+      var t = hhmm(m);
+      if (t !== last && clock) { clock.textContent = t; last = t; }
+      var any = false;
+      for (var k = 0; k < items.length; k++) {
+        var on = m >= items[k].at - 0.001 && !(cur === 1 && m === 0);
+        if (items[k].at <= 3 && cur === 1) on = false;
+        if (on !== items[k].on) { items[k].on = on; items[k].el.classList.toggle('on', on); }
+        if (on) any = true;
+      }
+      if (alb) { alb.classList.toggle('has-lines', any); alb.classList.toggle('sellado', m >= 665); }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
+  </script>
+</Base>

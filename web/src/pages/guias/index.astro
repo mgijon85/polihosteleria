@@ -1,0 +1,28 @@
+---
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Callout from '../../components/Callout.astro';
+import { GUIAS } from '../../data/guias';
+import { breadcrumbs } from '../../lib/schema';
+
+const items = [{ name: 'Guías', path: '/guias/' }];
+---
+<Base title="Guías para montar y llevar un local de hostelería | Polihostelería" description="Guías prácticas para hosteleros: qué necesitas para montar un bar y cómo elegir la vajilla de hostelería." schema={[breadcrumbs(items)]}>
+  <main>
+    <section class="page-hero">
+      <div class="wrap">
+        <Crumbs items={items} />
+        <h1>Guías para hosteleros</h1>
+        <p class="lede">Lo que preguntan los clientes cuando montan o reforman un local, escrito para que lo resuelvas antes de llamar.</p>
+      </div>
+    </section>
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="tiles" style="margin-top:0">
+          {GUIAS.map((g) => <a class="tile" href={`/guias/${g.slug}/`} style="padding:1.5rem"><h2 style="font-size:1.3rem">{g.titulo}</h2><p style="margin-top:0.6rem">{g.resumen}</p></a>)}
+        </div>
+      </div>
+    </section>
+    <Callout />
+  </main>
+</Base>

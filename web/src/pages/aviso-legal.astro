@@ -1,0 +1,24 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { SITE } from '../data/site';
+const p = (v: string) => v || 'pendiente de completar';
+---
+<Legal title="Aviso legal" path="/aviso-legal/" description="Aviso legal de polihosteleria.es: titular, datos de contacto y condiciones de uso.">
+  <h2>Titular</h2>
+  <p>En cumplimiento de la Ley 34/2002, de Servicios de la Sociedad de la Información y de Comercio Electrónico, el titular de este sitio web es:</p>
+  <ul>
+    <li>Razón social: {p(SITE.razonSocial)}</li>
+    <li>CIF: {p(SITE.cif)}</li>
+    <li>Domicilio: {SITE.direccion.calle}, {SITE.direccion.cp ? SITE.direccion.cp + ' ' : ''}{SITE.direccion.localidad}</li>
+    <li>Teléfono: {SITE.telefono}</li>
+    <li>Correo: {SITE.emailInfo}</li>
+  </ul>
+  <h2>Uso del sitio</h2>
+  <p>Este sitio informa sobre la actividad de Polihostelería como distribuidor de material de hostelería. Quien lo visita se compromete a hacer un uso adecuado de sus contenidos.</p>
+  <h2>Contenidos e imágenes</h2>
+  <p>Los textos, el diseño y las imágenes de este sitio pertenecen a su titular o se usan con permiso. Las imágenes son ilustrativas: los productos concretos, sus formatos y sus precios se confirman al hacer el pedido.</p>
+  <h2>Precios</h2>
+  <p>Los precios no se publican en esta web porque dependen de las condiciones de cada cliente. Se comunican al dar de alta al cliente.</p>
+  <h2>Legislación</h2>
+  <p>Este aviso se rige por la legislación española.</p>
+</Legal>

@@ -1,0 +1,57 @@
+---
+import Base from './Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import Callout from '../components/Callout.astro';
+import { GUIAS } from '../data/guias';
+import { breadcrumbs } from '../lib/schema';
+
+interface Props { slug: string; faq?: { q: string; a: string }[] }
+const { slug, faq = [] } = Astro.props;
+const g = GUIAS.find((x) => x.slug === slug)!;
+const items = [{ name: 'Guías', path: '/guias/' }, { name: g.titulo, path: `/guias/${g.slug}/` }];
+const schema: Record<string, unknown>[] = [
+  breadcrumbs(items),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: g.titulo,
+    description: g.descripcion,
+    datePublished: g.fecha,
+    dateModified: g.fecha,
+    inLanguage: 'es-ES',
+    author: { '@id': 'https://www.polihosteleria.es/#empresa' },
+    publisher: { '@id': 'https://www.polihosteleria.es/#empresa' },
+    mainEntityOfPage: `https://www.polihosteleria.es/guias/${g.slug}/`,
+  },
+];
+if (faq.length) schema.push({
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+<Base title={`${g.titulo} | Polihostelería`} description={g.descripcion} schema={schema}>
+  <main>
+    <article>
+      <header class="page-hero">
+        <div class="wrap">
+          <Crumbs items={items} />
+          <h1 style="max-width:24ch">{g.titulo}</h1>
+          <p class="lede">{g.resumen}</p>
+          <p class="note" style="margin-top:1rem">Polihostelería · <time datetime={g.fecha}>{new Date(g.fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}</time></p>
+        </div>
+      </header>
+      <div class="section section--surface">
+        <div class="wrap prose">
+          <slot />
+          {faq.length > 0 && (
+            <>
+              <h2>Preguntas frecuentes</h2>
+              <div class="faq">{faq.map((q) => <details><summary>{q.q}</summary><p>{q.a}</p></details>)}</div>
+            </>
+          )}
+        </div>
+      </div>
+    </article>
+    <Callout />
+  </main>
+</Base>

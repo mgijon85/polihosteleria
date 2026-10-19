@@ -1,0 +1,66 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import Callout from '../components/Callout.astro';
+import { SITE, waLink } from '../data/site';
+import { foto } from '../lib/fotos';
+import { breadcrumbs, faqPage } from '../lib/schema';
+
+const items = [{ name: 'Servicio técnico', path: '/servicio-tecnico/' }];
+const maquinas = [
+  { t: 'Frío comercial e industrial', d: 'Botelleros, vitrinas, congeladores verticales, armarios frigoríficos y cámaras.' },
+  { t: 'Calor', d: 'Cocinas, hornos y parrillas industriales.' },
+  { t: 'Lavado', d: 'Lavavajillas industriales y lavavasos.' },
+  { t: 'Extracción y clima', d: 'Campanas extractoras y calefacción.' },
+];
+const faq = [
+  { q: '¿Qué hago si se me para una máquina?', a: `Llama al ${SITE.telefono} o escríbenos por WhatsApp con una foto o un vídeo de la máquina y del fallo. Te decimos cuándo podemos ir.` },
+  { q: '¿Hacéis mantenimiento preventivo?', a: 'Sí. Revisar el frío y el lavavajillas antes de la temporada evita la avería en pleno agosto.' },
+  { q: '¿Instaláis la maquinaria que compro?', a: 'Sí. La maquinaria que te vendemos te la instalamos y la dejamos funcionando.' },
+];
+const schema = [
+  breadcrumbs(items),
+  faqPage(faq),
+  { '@context': 'https://schema.org', '@type': 'Service', name: 'Servicio técnico de maquinaria de hostelería', provider: { '@id': 'https://www.polihosteleria.es/#empresa' }, areaServed: 'Provincia de Huelva', serviceType: 'Instalación, mantenimiento y reparación de maquinaria de hostelería' },
+];
+---
+<Base title="Servicio técnico de maquinaria de hostelería en Huelva | Polihostelería" description="Instalación, mantenimiento y reparación de maquinaria de hostelería en Huelva: frío comercial, cocinas, hornos, lavavajillas, lavavasos y campanas." schema={schema}>
+  <main>
+    <section class="page-hero">
+      <div class="wrap split">
+        <div>
+          <Crumbs items={items} />
+          <h1>Servicio técnico de maquinaria de hostelería en Huelva</h1>
+          <p class="lede">Instalación, mantenimiento y reparación de frío, calor, lavavajillas y campanas. Porque una máquina parada es una cocina parada.</p>
+          <div class="hero-actions">
+            <a class="btn btn--primary" href={SITE.telefonoHref}>Llamar al {SITE.telefono}</a>
+            <a class="link" href={waLink('Hola, tengo una máquina averiada. Os mando foto.')}>Mandar foto por WhatsApp</a>
+          </div>
+        </div>
+        <div class="figure" style="aspect-ratio:4/3">
+          <Image src={foto('m-sat')} alt="Técnico revisando el panel de un lavavasos de acero bajo una barra" widths={[560, 900, 1200]} sizes="(max-width: 860px) 100vw, 46vw" loading="eager" fetchpriority="high" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--surface">
+      <div class="wrap">
+        <h2>Qué máquinas atendemos</h2>
+        <div class="tiles">
+          {maquinas.map((m) => <div class="tile" style="padding:1.4rem"><h3>{m.t}</h3><p style="color:var(--muted);margin-top:0.4rem">{m.d}</p></div>)}
+        </div>
+        <p class="sub" style="margin-top:1.5rem">¿Necesitas comprar o cambiar una máquina? Mira la <a class="link" href="/catalogo/maquinaria/">maquinaria de hostelería</a> que instalamos.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Preguntas frecuentes</h2>
+        <div class="faq">{faq.map((q) => <details><summary>{q.q}</summary><p>{q.a}</p></details>)}</div>
+      </div>
+    </section>
+
+    <Callout />
+  </main>
+</Base>

@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { foto } from '../lib/fotos';
+import Crumbs from '../components/Crumbs.astro';
+import { SITE, CTA, waLink } from '../data/site';
+import { breadcrumbs } from '../lib/schema';
+
+const items = [{ name: 'Contacto', path: '/contacto/' }];
+---
+<Base title="Contacto y cómo llegar | Polihostelería Huelva" description={`Polihostelería: ${SITE.direccion.calle}, Huelva. Teléfono ${SITE.telefono}, WhatsApp y correo para pedidos y altas de cliente.`} schema={[breadcrumbs(items), { '@context': 'https://schema.org', '@type': 'ContactPage', about: { '@id': 'https://www.polihosteleria.es/#empresa' } }]}>
+  <main>
+    <section class="page-hero">
+      <div class="wrap">
+        <Crumbs items={items} />
+        <h1>Contacto</h1>
+        <p class="lede">Para pedidos, altas de cliente, montajes o una avería.</p>
+      </div>
+    </section>
+    <section class="section" style="padding-top:0">
+      <div class="wrap split" style="align-items:start">
+        <div class="form-card prose">
+          <h2 style="margin-top:0;font-size:1.4rem">Llámanos o escríbenos</h2>
+          <p><strong>Oficina:</strong> <a class="link" href={SITE.telefonoHref}>{SITE.telefono}</a></p>
+          <p><strong>Móvil:</strong> <a class="link" href={SITE.movilHref}>{SITE.movil}</a></p>
+          <p><strong>WhatsApp:</strong> <a class="link" href={waLink()}>Abrir conversación</a></p>
+          <p><strong>Pedidos:</strong> <a class="link" href={`mailto:${SITE.emailPedidos}`}>{SITE.emailPedidos}</a></p>
+          <p><strong>Información:</strong> <a class="link" href={`mailto:${SITE.emailInfo}`}>{SITE.emailInfo}</a></p>
+          {SITE.horario && <p><strong>Horario:</strong> {SITE.horario}</p>}
+          <div class="hero-actions"><a class="btn btn--primary" href={CTA.href}>{CTA.label}</a></div>
+        </div>
+        <div class="form-card prose">
+          <h2 style="margin-top:0;font-size:1.4rem">Cómo llegar</h2>
+          <p>{SITE.direccion.calle}<br />{SITE.direccion.cp ? `${SITE.direccion.cp} ` : ''}{SITE.direccion.localidad}</p>
+          <p>Estamos en la nave 47 de la calle B del Polígono Industrial El Rincón.</p>
+          <div class="hero-actions"><a class="btn btn--quiet" href={SITE.mapsUrl} rel="noopener">Abrir en Google Maps</a></div>
+          <div class="figure" style="aspect-ratio:16/10;margin-top:1.5rem">
+            <Image src={foto('nave-marca')} alt="Fachada de la nave de Polihostelería con el rótulo y las furgonetas" widths={[560, 900]} sizes="(max-width: 860px) 100vw, 40vw" />
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>

@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import Callout from '../components/Callout.astro';
+import { SITE, CANALES, CTA, waLink } from '../data/site';
+import { breadcrumbs, faqPage } from '../lib/schema';
+
+const items = [{ name: 'Cómo pedir', path: '/como-pedir/' }];
+const faq = [
+  { q: '¿Puedo pedir de noche, cuando cierro?', a: 'Sí. Escríbenos por WhatsApp o manda un audio a la hora que sea. Lo apuntamos y sale en el siguiente reparto de tu zona.' },
+  { q: '¿Tengo que ser cliente para pedir?', a: 'Sí. Te damos de alta una vez: un comercial te visita, te deja tus precios y tus condiciones, y desde ahí pides cuando quieras.' },
+  { q: '¿Cuándo me llega el pedido?', a: 'En el día de reparto de tu zona. Cada ruta (Huelva capital, Costa oeste, Costa este, Condado y Sierra) tiene sus días. Te los dice tu comercial al darte de alta.' },
+  { q: '¿Puedo repetir el pedido de siempre?', a: 'Sí. Con decir «lo de siempre» basta: tenemos apuntado lo que sueles pedir.' },
+  { q: '¿Cómo pago?', a: 'Según las condiciones que acordemos al darte de alta. Te lo explica tu comercial.' },
+];
+const schema = [breadcrumbs(items), faqPage(faq)];
+---
+<Base title="Cómo hacer un pedido de material de hostelería | Polihostelería" description="Pide tu material de hostelería por WhatsApp, con un audio, por teléfono, por correo o a tu comercial, a cualquier hora. Reparto propio en Huelva y provincia." schema={schema}>
+  <main>
+    <section class="page-hero">
+      <div class="wrap">
+        <Crumbs items={items} />
+        <h1>Pide como te venga bien. A la hora que te venga bien.</h1>
+        <p class="lede">Escribe la lista, manda un audio o díselo a tu comercial. Nosotros lo preparamos y te lo llevamos en el siguiente reparto de tu zona.</p>
+        <div class="hero-actions">
+          <a class="btn btn--primary" href={waLink()}>Pedir por WhatsApp</a>
+          <a class="btn btn--quiet" href={SITE.telefonoHref}>Llamar al {SITE.telefono}</a>
+        </div>
+        <p class="note" style="margin-top:1rem">¿Aún no eres cliente? <a class="link" href={CTA.href}>Date de alta primero</a>.</p>
+      </div>
+    </section>
+
+    <section class="section section--surface">
+      <div class="wrap">
+        <h2>Cuatro formas de pedir</h2>
+        <div class="tiles">
+          {CANALES.map((c) => <div class="tile" style="padding:1.4rem"><h3>{c.nombre}</h3><p style="color:var(--muted);margin-top:0.4rem">{c.detalle}</p></div>)}
+        </div>
+        {SITE.portalActivo && <p class="sub" style="margin-top:1.5rem">Y desde tu <a class="link" href={SITE.portalUrl}>área de clientes</a>: tus precios, repetir pedidos y tus facturas.</p>}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap split" style="align-items:start">
+        <div class="prose">
+          <h2 style="margin-top:0">Qué pasa con tu pedido</h2>
+          <ol>
+            <li><strong>Lo apuntamos.</strong> Con tus precios y tus condiciones de cliente.</li>
+            <li><strong>Lo preparamos</strong> en el almacén del Polígono El Rincón, ordenado por rutas.</li>
+            <li><strong>Lo cargamos</strong> en la furgoneta de tu zona.</li>
+            <li><strong>Te lo entregamos</strong> en tu local, con su albarán.</li>
+          </ol>
+        </div>
+        <div class="prose">
+          <h2 style="margin-top:0">Hora de corte</h2>
+          <p>{SITE.horaCorte ? `Lo que pidas antes de las ${SITE.horaCorte} entra en el siguiente reparto de tu zona.` : 'Cada ruta tiene su hora de corte y sus días de reparto. Te los da tu comercial al darte de alta.'}</p>
+          <p><a class="link" href="/reparto/">Ver zonas de reparto</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--surface">
+      <div class="wrap">
+        <h2>Preguntas frecuentes</h2>
+        <div class="faq">{faq.map((q) => <details><summary>{q.q}</summary><p>{q.a}</p></details>)}</div>
+      </div>
+    </section>
+
+    <Callout />
+  </main>
+</Base>

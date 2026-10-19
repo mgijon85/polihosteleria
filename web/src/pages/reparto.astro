@@ -1,0 +1,37 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import Callout from '../components/Callout.astro';
+import { ZONAS } from '../data/site';
+import { foto } from '../lib/fotos';
+import { breadcrumbs } from '../lib/schema';
+
+const items = [{ name: 'Zonas de reparto', path: '/reparto/' }];
+---
+<Base title="Reparto de material de hostelería en Huelva y provincia | Polihostelería" description="Reparto propio de material de hostelería en Huelva capital, la Costa (Isla Cristina, Lepe, Ayamonte, Punta Umbría), el Condado y la Sierra." schema={[breadcrumbs(items)]}>
+  <main>
+    <section class="page-hero">
+      <div class="wrap split">
+        <div>
+          <Crumbs items={items} />
+          <h1>Reparto propio en Huelva y provincia</h1>
+          <p class="lede">Nuestras furgonetas y nuestros repartidores. Cada zona tiene su ruta y sus días, para que el pedido llegue cuando lo esperas.</p>
+        </div>
+        <div class="figure" style="aspect-ratio:16/10">
+          <Image src={foto('furgoneta-marca')} alt="Furgoneta de reparto de Polihostelería por una carretera entre pinos y marismas al amanecer" widths={[560, 900, 1300]} sizes="(max-width: 860px) 100vw, 46vw" loading="eager" fetchpriority="high" />
+        </div>
+      </div>
+    </section>
+    <section class="section section--surface">
+      <div class="wrap">
+        <h2>Rutas</h2>
+        <div class="tiles">
+          {ZONAS.map((z) => <div class="tile" style="padding:1.4rem"><h3>{z.nombre}</h3><p style="color:var(--muted);margin-top:0.4rem">{z.detalle}</p></div>)}
+        </div>
+        <p class="sub" style="margin-top:1.5rem">Los días de reparto y la hora de corte de tu ruta te los da tu comercial al darte de alta. ¿Tu pueblo no aparece? Pregúntanos.</p>
+      </div>
+    </section>
+    <Callout />
+  </main>
+</Base>

@@ -1,0 +1,92 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import Callout from '../components/Callout.astro';
+import { CTA, waLink } from '../data/site';
+import { foto } from '../lib/fotos';
+import { breadcrumbs, faqPage } from '../lib/schema';
+
+const items = [{ name: 'Montaje de locales', path: '/montaje-de-locales/' }];
+const pasos = [
+  { t: 'Visita al local', d: 'Vemos el espacio, el tipo de cocina que vas a tener y cuántos cubiertos quieres dar. Sin eso no se puede presupuestar bien.' },
+  { t: 'Propuesta cerrada', d: 'Te pasamos qué maquinaria, mobiliario y menaje necesitas, con alternativas si quieres ajustar el presupuesto.' },
+  { t: 'Instalación', d: 'Llevamos la maquinaria, la instalamos y la dejamos funcionando. El menaje y la vajilla llegan listos para el primer servicio.' },
+  { t: 'Después de abrir', d: 'Te quedas como cliente: reposición por WhatsApp o con tu comercial, y servicio técnico para la maquinaria.' },
+];
+const faq = [
+  { q: '¿Qué tipo de locales montáis?', a: 'Cafeterías, bares, restaurantes, hoteles, guarderías y empresas de limpieza. Desde una barra nueva hasta la cocina completa.' },
+  { q: '¿Me lo dejáis todo, de la cámara a la cucharilla?', a: 'Sí. Maquinaria de frío y calor, lavavajillas, campanas, mobiliario de interior y terraza, vajilla, cristalería, cubertería, uniformes y la primera reposición de consumibles.' },
+  { q: '¿Cuánto cuesta montar un bar?', a: 'Depende del local, de la cocina y de si la maquinaria es nueva o se aprovecha la que hay. Por eso empezamos con una visita y una propuesta cerrada.' },
+];
+const schema = [
+  breadcrumbs(items),
+  faqPage(faq),
+  { '@context': 'https://schema.org', '@type': 'Service', name: 'Montaje completo de locales de hostelería', provider: { '@id': 'https://www.polihosteleria.es/#empresa' }, areaServed: 'Provincia de Huelva', serviceType: 'Equipamiento de hostelería' },
+];
+---
+<Base title="Montaje de bares, cafeterías y restaurantes en Huelva | Polihostelería" description="Montaje completo de cafeterías, bares, restaurantes, hoteles y guarderías en Huelva: maquinaria, mobiliario, menaje y servicio técnico, de la visita a la apertura." schema={schema}>
+  <main>
+    <section class="page-hero">
+      <div class="wrap split">
+        <div>
+          <Crumbs items={items} />
+          <h1>Te montamos el local entero, de la cámara a la cucharilla</h1>
+          <p class="lede">Montaje completo de cafeterías, bares, restaurantes, hoteles y guarderías en Huelva. Un solo proveedor para la maquinaria, el mobiliario y todo lo que va encima de la mesa.</p>
+          <div class="hero-actions">
+            <a class="btn btn--primary" href={CTA.href}>Pedir una visita</a>
+            <a class="link" href={waLink('Hola, voy a montar un local y quería una visita.')}>Escribir por WhatsApp</a>
+          </div>
+        </div>
+        <div class="figure" style="aspect-ratio:16/10">
+          <Image src={foto('m-cafeteria')} alt="Cafetería recién montada antes de abrir, con barra, vitrina, cafetera y taburetes" widths={[560, 900, 1300]} sizes="(max-width: 860px) 100vw, 46vw" loading="eager" fetchpriority="high" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--surface">
+      <div class="wrap">
+        <h2>Cómo trabajamos</h2>
+        <ol class="tiles" style="list-style:none;padding:0">
+          {pasos.map((p, i) => (
+            <li class="tile" style="padding:1.4rem 1.4rem 1.6rem">
+              <span class="num" style="color:var(--brand);font-weight:700;font-family:var(--font-display)">{i + 1}</span>
+              <h3 style="margin-top:0.5rem">{p.t}</h3>
+              <p style="color:var(--muted);margin-top:0.4rem;font-size:0.97rem">{p.d}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap split">
+        <div class="figure" style="aspect-ratio:4/3">
+          <Image src={foto('m-cocina')} alt="Cocina profesional recién instalada con cocina de fuegos, campana, mesas de acero y horno" widths={[560, 900, 1200]} sizes="(max-width: 860px) 100vw, 46vw" />
+        </div>
+        <div class="prose">
+          <h2 style="margin-top:0">Qué entra en un montaje</h2>
+          <ul class="list-check">
+            <li>Frío: cámaras, armarios, botelleros y vitrinas</li>
+            <li>Calor: cocinas, hornos, planchas y freidoras</li>
+            <li>Lavado: lavavajillas industrial y lavavasos</li>
+            <li>Extracción: campanas</li>
+            <li>Mobiliario de interior y de terraza</li>
+            <li>Vajilla, cristalería, cubertería y menaje de cocina</li>
+            <li>Uniformes y la primera reposición de consumibles</li>
+          </ul>
+          <p>Y si mañana se para una máquina, te la atiende nuestro <a class="link" href="/servicio-tecnico/">servicio técnico</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--surface">
+      <div class="wrap">
+        <h2>Preguntas frecuentes</h2>
+        <div class="faq">{faq.map((q) => <details><summary>{q.q}</summary><p>{q.a}</p></details>)}</div>
+      </div>
+    </section>
+
+    <Callout title="¿Vas a abrir o a reformar?" text="Cuéntanos qué local es y cuándo quieres abrir. Te llamamos para quedar y verlo." />
+  </main>
+</Base>

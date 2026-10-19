@@ -1,0 +1,13 @@
+{
+  "trailingSlash": true,
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/products.html", "destination": "/catalogo/", "permanent": true },
+    { "source": "/services.html", "destination": "/montaje-de-locales/", "permanent": true },
+    { "source": "/localizacion.html", "destination": "/contacto/", "permanent": true },
+    { "source": "/contacto.html", "destination": "/contacto/", "permanent": true }
+  ],
+  "headers": [
+    { "source": "/scrollcraft/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] }
+  ]
+}

@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Crumbs from '../../components/Crumbs.astro';
+import Callout from '../../components/Callout.astro';
+import { FAMILIAS, SECTORES } from '../../data/site';
+import { foto } from '../../lib/fotos';
+import { breadcrumbs } from '../../lib/schema';
+
+const items = [{ name: 'Catálogo', path: '/catalogo/' }];
+const schema = [
+  breadcrumbs(items),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Catálogo de material de hostelería',
+    hasPart: FAMILIAS.map((f) => ({ '@type': 'WebPage', name: f.titulo, url: `https://www.polihosteleria.es/catalogo/${f.slug}/` })),
+  },
+];
+---
+<Base title="Catálogo de material de hostelería en Huelva | Polihostelería" description="Menaje, cristalería, cubertería, desechables, celulosa, limpieza, maquinaria, uniformes y mobiliario de terraza para hostelería en Huelva, con reparto propio." schema={schema}>
+  <main>
+    <section class="page-hero">
+      <div class="wrap">
+        <Crumbs items={items} />
+        <h1>Todo lo que gasta un local de hostelería</h1>
+        <p class="lede">Nueve familias de producto para bares, restaurantes, hoteles y colectividades de Huelva. Lo que repones cada semana y lo que compras una vez cuando montas el local.</p>
+        <div class="chips">{SECTORES.map((s) => <span class="chip">{s}</span>)}</div>
+      </div>
+    </section>
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="tiles" style="margin-top:0">
+          {FAMILIAS.map((f) => (
+            <a class="tile" href={`/catalogo/${f.slug}/`}>
+              <Image src={foto(f.foto)} alt={f.alt} widths={[400, 720]} sizes="(max-width: 640px) 100vw, 380px" />
+              <div class="tile__body">
+                <h2 class="h3" style="font-size:1.12rem">{f.nombre}</h2>
+                <p>{f.corto}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+        <p class="note" style="margin-top:1.5rem">Los precios dependen de tu tarifa de cliente. Te los damos al darte de alta.</p>
+      </div>
+    </section>
+    <Callout />
+  </main>
+</Base>

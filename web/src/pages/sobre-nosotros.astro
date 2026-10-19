@@ -1,0 +1,55 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+import Callout from '../components/Callout.astro';
+import { SITE, SECTORES } from '../data/site';
+import { foto } from '../lib/fotos';
+import { breadcrumbs } from '../lib/schema';
+
+const items = [{ name: 'Sobre nosotros', path: '/sobre-nosotros/' }];
+---
+<Base title="Sobre Polihostelería | Distribuidor de hostelería en Huelva" description="Polihostelería es un distribuidor de material de hostelería de Huelva con almacén en el Polígono El Rincón, comerciales, reparto propio y servicio técnico." schema={[breadcrumbs(items), { '@context': 'https://schema.org', '@type': 'AboutPage', about: { '@id': 'https://www.polihosteleria.es/#empresa' } }]}>
+  <main>
+    <section class="page-hero">
+      <div class="wrap split">
+        <div>
+          <Crumbs items={items} />
+          <h1>Un distribuidor de Huelva para la hostelería de Huelva</h1>
+          <p class="lede">Almacén en el Polígono El Rincón, comerciales que visitan tu local, furgonetas propias y servicio técnico. Todo lo que necesita un bar para abrir y para no quedarse sin nada.</p>
+        </div>
+        <div class="figure" style="aspect-ratio:16/10">
+          <Image src={foto('nave-marca')} alt="Nave de Polihostelería con el muelle de carga abierto y dos furgonetas de reparto rotuladas" widths={[560, 900, 1300]} sizes="(max-width: 860px) 100vw, 46vw" loading="eager" fetchpriority="high" />
+        </div>
+      </div>
+    </section>
+    <section class="section section--surface">
+      <div class="wrap split" style="align-items:start">
+        <div class="prose">
+          <h2 style="margin-top:0">Qué hacemos</h2>
+          <p>Distribuimos material de hostelería: maquinaria, menaje, vajilla, cristalería, celulosa, limpieza, uniformes y mobiliario de interior y terraza.</p>
+          <p>Montamos locales completos y abastecemos su reposición después de abrir. Y mantenemos la maquinaria con nuestro propio servicio técnico.</p>
+        </div>
+        <div class="prose">
+          <h2 style="margin-top:0">Para quién</h2>
+          <div class="chips">{SECTORES.map((s) => <span class="chip">{s}</span>)}</div>
+          <p style="margin-top:1.25rem">En Huelva capital, la Costa, el Condado y la Sierra.</p>
+          <p><a class="link" href="/contacto/">Ven a vernos</a> · {SITE.direccion.calle}, {SITE.direccion.localidad}</p>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap split">
+        <div class="figure" style="aspect-ratio:3/4;max-height:38rem">
+          <Image src={foto('almacen-marca')} alt="Mozo de almacén de Polihostelería preparando un palé de pedidos" widths={[480, 800]} sizes="(max-width: 860px) 100vw, 40vw" />
+        </div>
+        <div class="prose">
+          <h2 style="margin-top:0">Pedidos preparados por rutas</h2>
+          <p>Cada pedido se prepara en el almacén y se carga en la furgoneta de su zona. Así llega a tu local con su albarán y sin mezclarse con el de otro cliente.</p>
+          <p><a class="link" href="/como-pedir/">Cómo pedir</a> · <a class="link" href="/reparto/">Zonas de reparto</a></p>
+        </div>
+      </div>
+    </section>
+    <Callout />
+  </main>
+</Base>

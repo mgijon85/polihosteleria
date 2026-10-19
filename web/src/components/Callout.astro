@@ -1,0 +1,19 @@
+---
+import { CTA, SITE, waLink } from '../data/site';
+interface Props { title?: string; text?: string }
+const { title = '¿Te damos de alta como cliente?', text = 'Te visita un comercial, te dejamos tus precios y a partir de ahí pides como prefieras: WhatsApp, teléfono, correo o en la visita.' } = Astro.props;
+---
+<section class="section">
+  <div class="wrap">
+    <div class="callout">
+      <div>
+        <h2>{title}</h2>
+        <p>{text}</p>
+      </div>
+      <div class="hero-actions" style="margin-top:0">
+        <a class="btn btn--primary" href={CTA.href}>{CTA.label}</a>
+        <a class="btn btn--quiet" href={waLink()}>WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>

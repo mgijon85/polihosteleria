@@ -1,0 +1,194 @@
+---
+import '../styles/global.css';
+import { SITE, CTA, FAMILIAS, waLink } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  variant?: 'default' | 'home';
+  schema?: Record<string, unknown>[];
+  ogImage?: string;
+  noindex?: boolean;
+}
+const { title, description, variant = 'default', schema = [], ogImage = '/img/og.jpg', noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const path = Astro.url.pathname;
+
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'WholesaleStore',
+  '@id': `${SITE.url}/#empresa`,
+  name: SITE.nombre,
+  legalName: SITE.razonSocial || undefined,
+  url: `${SITE.url}/`,
+  logo: `${SITE.url}/icon-512.png`,
+  image: `${SITE.url}/img/og.jpg`,
+  description: 'Distribuidor de material de hostelería en Huelva: menaje, vajilla, cristalería, celulosa, limpieza, maquinaria, uniformes y mobiliario, con reparto propio y servicio técnico.',
+  telephone: '+34959222223',
+  email: SITE.emailInfo,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE.direccion.calle,
+    addressLocality: SITE.direccion.localidad,
+    addressRegion: SITE.direccion.provincia,
+    ...(SITE.direccion.cp ? { postalCode: SITE.direccion.cp } : {}),
+    addressCountry: SITE.direccion.pais,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: SITE.geo.lat, longitude: SITE.geo.lng },
+  areaServed: ['Huelva', 'Isla Cristina', 'Lepe', 'Ayamonte', 'Punta Umbría', 'Condado de Huelva', 'Sierra de Huelva'].map((n) => ({ '@type': 'Place', name: n })),
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Catálogo de material de hostelería',
+    itemListElement: FAMILIAS.map((f) => ({
+      '@type': 'OfferCatalog',
+      name: f.nombre,
+      url: `${SITE.url}/catalogo/${f.slug}/`,
+    })),
+  },
+};
+const ld = [org, ...schema];
+
+const nav = [
+  { href: '/catalogo/', label: 'Catálogo' },
+  { href: '/montaje-de-locales/', label: 'Montaje de locales' },
+  { href: '/servicio-tecnico/', label: 'Servicio técnico' },
+  { href: '/como-pedir/', label: 'Cómo pedir' },
+  { href: '/contacto/', label: 'Contacto' },
+];
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex" />}
+  <meta name="theme-color" content={variant === 'home' ? '#0D1522' : '#F5F6F8'} />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content={SITE.nombre} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={new URL(ogImage, SITE.url).href} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <slot name="head" />
+</head>
+<body class={variant === 'home' ? 'is-home' : undefined}>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+
+  <header class:list={['site-head', variant === 'home' && 'site-head--home']}>
+    <div class="wrap site-head__in">
+      <a class="brand" href="/" aria-label="Polihostelería, inicio">
+        <img src="/img/logo.png" width="280" height="255" alt="" />
+        <span>Polihostelería</span>
+      </a>
+      {variant !== 'home' && (
+        <nav class="nav" aria-label="Principal">
+          {nav.map((n) => <a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a>)}
+        </nav>
+      )}
+      <div class="head-actions">
+        {SITE.portalActivo && variant !== 'home' && <a class="area" href={SITE.portalUrl}>Área de clientes</a>}
+        <a class="btn btn--primary" href={CTA.href}>{CTA.label}</a>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" data-menu-open>
+          <span class="visually-hidden">Abrir menú</span>
+          <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="menu-sheet" id="menu" hidden data-menu>
+    <div class="menu-sheet__panel" role="dialog" aria-modal="true" aria-label="Menú">
+      <div class="menu-sheet__top">
+        <a class="brand" href="/"><img src="/img/logo.png" width="280" height="255" alt="" /><span>Polihostelería</span></a>
+        <button class="menu-btn" style="display:inline-flex" type="button" data-menu-close>
+          <span class="visually-hidden">Cerrar menú</span>
+          <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <a href="/">Inicio</a>
+      {nav.map((n) => <a href={n.href}>{n.label}</a>)}
+      <a href="/reparto/">Zonas de reparto</a>
+      <a href="/guias/">Guías</a>
+      <a href="/sobre-nosotros/">Sobre nosotros</a>
+      {SITE.portalActivo && <a href={SITE.portalUrl}>Área de clientes</a>}
+      <p class="menu-sheet__group">Pedidos</p>
+      <a href={waLink()}>Pedir por WhatsApp</a>
+      <a href={SITE.telefonoHref}>Llamar al {SITE.telefono}</a>
+      <a class="btn btn--primary" href={CTA.href}>{CTA.label}</a>
+    </div>
+  </div>
+
+  <div id="contenido">
+    <slot />
+  </div>
+
+  {variant !== 'home' && (
+    <footer class="site-foot">
+      <div class="wrap">
+        <div class="foot-grid">
+          <div>
+            <div class="foot-brand"><img src="/img/logo.png" width="280" height="255" alt="" /> Polihostelería</div>
+            <p style="margin-top:1rem;max-width:34ch">Distribuidor de material de hostelería en Huelva. Reparto propio en la capital, la Costa, el Condado y la Sierra.</p>
+            <p style="margin-top:1rem">{SITE.direccion.calle}, {SITE.direccion.localidad}</p>
+          </div>
+          <div>
+            <h2>Catálogo</h2>
+            <ul>{FAMILIAS.slice(0, 5).map((f) => <li><a href={`/catalogo/${f.slug}/`}>{f.nombre}</a></li>)}<li><a href="/catalogo/">Ver todo</a></li></ul>
+          </div>
+          <div>
+            <h2>Servicios</h2>
+            <ul>
+              <li><a href="/montaje-de-locales/">Montaje de locales</a></li>
+              <li><a href="/servicio-tecnico/">Servicio técnico</a></li>
+              <li><a href="/como-pedir/">Cómo pedir</a></li>
+              <li><a href="/reparto/">Zonas de reparto</a></li>
+              <li><a href="/guias/">Guías</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>Contacto</h2>
+            <ul>
+              <li><a href={SITE.telefonoHref}>{SITE.telefono}</a></li>
+              <li><a href={SITE.movilHref}>{SITE.movil}</a></li>
+              <li><a href={`mailto:${SITE.emailPedidos}`}>{SITE.emailPedidos}</a></li>
+              <li><a href="/sobre-nosotros/">Sobre nosotros</a></li>
+              <li><a href="/contacto/">Cómo llegar</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="foot-legal">
+          <span>© {new Date().getFullYear()} {SITE.nombre}</span>
+          <a href="/aviso-legal/">Aviso legal</a>
+          <a href="/privacidad/">Privacidad</a>
+          <a href="/cookies/">Cookies</a>
+        </div>
+      </div>
+    </footer>
+  )}
+
+  <script>
+    const sheet = document.querySelector<HTMLElement>('[data-menu]');
+    const openers = document.querySelectorAll<HTMLButtonElement>('[data-menu-open]');
+    const close = () => { if (!sheet) return; sheet.hidden = true; openers.forEach((b) => b.setAttribute('aria-expanded', 'false')); document.documentElement.style.overflow = ''; };
+    openers.forEach((b) => b.addEventListener('click', () => {
+      if (!sheet) return;
+      sheet.hidden = false; b.setAttribute('aria-expanded', 'true');
+      document.documentElement.style.overflow = 'hidden';
+      sheet.querySelector<HTMLElement>('[data-menu-close]')?.focus();
+    }));
+    sheet?.querySelector('[data-menu-close]')?.addEventListener('click', close);
+    sheet?.addEventListener('click', (e) => { if (e.target === sheet) close(); });
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' && sheet && !sheet.hidden) close(); });
+  </script>
+</body>
+</html>

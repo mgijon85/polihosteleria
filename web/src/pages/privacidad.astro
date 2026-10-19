@@ -1,0 +1,20 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { SITE } from '../data/site';
+---
+<Legal title="Política de privacidad" path="/privacidad/" description="Cómo trata Polihostelería los datos personales de clientes y personas que contactan.">
+  <h2>Responsable</h2>
+  <p>{SITE.razonSocial || 'Polihostelería'}{SITE.cif ? `, CIF ${SITE.cif}` : ''}. {SITE.direccion.calle}, {SITE.direccion.localidad}. Correo: {SITE.emailInfo}.</p>
+  <h2>Qué datos tratamos y para qué</h2>
+  <p>Los que nos das al pedir el alta como cliente o al contactarnos (nombre, local, localidad, teléfono y lo que nos cuentes) para atender tu solicitud, darte de alta, gestionar tus pedidos, entregas y facturas.</p>
+  <h2>Cómo llegan</h2>
+  <p>Esta web no guarda los datos del formulario: el formulario abre WhatsApp o tu programa de correo con el mensaje escrito, y eres tú quien lo envía. A partir de ahí los tratamos dentro de nuestra relación comercial.</p>
+  <h2>Base legal</h2>
+  <p>Tu consentimiento al enviarnos la solicitud y, si te das de alta, la ejecución de la relación comercial y las obligaciones legales (por ejemplo, facturación).</p>
+  <h2>Conservación</h2>
+  <p>Mientras dure la relación comercial y, después, durante los plazos que exige la ley.</p>
+  <h2>Destinatarios</h2>
+  <p>No cedemos tus datos a terceros salvo obligación legal o proveedores que nos prestan servicios (por ejemplo, la gestoría o el servicio de mensajería que elijas para escribirnos).</p>
+  <h2>Tus derechos</h2>
+  <p>Puedes pedir acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a {SITE.emailInfo}. Si crees que no atendemos bien tu solicitud, puedes reclamar ante la Agencia Española de Protección de Datos.</p>
+</Legal>

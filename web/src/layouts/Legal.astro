@@ -1,0 +1,12 @@
+---
+import Base from './Base.astro';
+import Crumbs from '../components/Crumbs.astro';
+interface Props { title: string; path: string; description: string }
+const { title, path, description } = Astro.props;
+---
+<Base title={`${title} | Polihostelería`} description={description}>
+  <main>
+    <section class="page-hero"><div class="wrap"><Crumbs items={[{ name: title, path }]} /><h1>{title}</h1></div></section>
+    <section class="section section--surface"><div class="wrap prose"><slot /></div></section>
+  </main>
+</Base>
