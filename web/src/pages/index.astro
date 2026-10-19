@@ -17,8 +17,8 @@ const estados = [
 ---
 <Base variant="home" title={title} description={description}>
   <Fragment slot="head">
-    <link rel="preload" as="image" href="/scrollcraft/home/noche-1920.webp" media="(min-width: 861px)" fetchpriority="high" />
-    <link rel="preload" as="image" href="/scrollcraft/home/noche-960.webp" media="(max-width: 860px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/scrollcraft/home/noche-1600.webp" imagesrcset="/scrollcraft/home/noche-1600.webp 1600w, /scrollcraft/home/noche-2400.webp 2400w, /scrollcraft/home/noche-3200.webp 3200w" imagesizes="100vw" media="(min-width: 861px)" fetchpriority="high" />
+    <link rel="preload" as="image" href="/scrollcraft/home/noche-960.webp" imagesrcset="/scrollcraft/home/noche-960.webp 960w, /scrollcraft/home/noche-1600.webp 1600w" imagesizes="100vw" media="(max-width: 860px)" fetchpriority="high" />
     <link rel="stylesheet" href="/scrollcraft/scrollcraft.css" />
     <style is:global>
       :root {
@@ -278,7 +278,7 @@ const estados = [
     <section data-sc-act="pin" data-sc-span="1.8" data-ph-act="1">
       <div data-sc-stage class="ph-stage">
         <div class="ph-layer ph-night">
-          <img class="ph-bg" src="/scrollcraft/home/noche-1920.webp" srcset="/scrollcraft/home/noche-960.webp 960w, /scrollcraft/home/noche-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="Interior de un bar cerrado de noche, con las sillas sobre las mesas y una lámpara encendida sobre la barra" fetchpriority="high" />
+          <img class="ph-bg" src="/scrollcraft/home/noche-1600.webp" srcset="/scrollcraft/home/noche-960.webp 960w, /scrollcraft/home/noche-1600.webp 1600w, /scrollcraft/home/noche-2400.webp 2400w, /scrollcraft/home/noche-3200.webp 3200w" sizes="100vw" width="1600" height="893" alt="Interior de un bar cerrado de noche, con las sillas sobre las mesas y una lámpara encendida sobre la barra" fetchpriority="high" />
           <div class="ph-glow" aria-hidden="true"></div>
           <div class="ph-persiana" aria-hidden="true"></div>
           <div class="ph-shade-n" aria-hidden="true"></div>
@@ -289,9 +289,9 @@ const estados = [
           </div>
         </div>
         <div class="ph-layer ph-day">
-          <img class="ph-bg ph-media-d" src="/scrollcraft/home/manana-1920.webp" srcset="/scrollcraft/home/manana-960.webp 960w, /scrollcraft/home/manana-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="" loading="eager" />
+          <img class="ph-bg ph-media-d" src="/scrollcraft/home/manana-1600.webp" srcset="/scrollcraft/home/manana-960.webp 960w, /scrollcraft/home/manana-1600.webp 1600w, /scrollcraft/home/manana-2400.webp 2400w, /scrollcraft/home/manana-3200.webp 3200w" sizes="100vw" width="1600" height="893" alt="" loading="eager" />
           <div class="ph-sun" aria-hidden="true"></div>
-          <img class="ph-vaso-fg" src="/scrollcraft/home/vasos-900.webp" width="900" height="675" alt="" data-sc-parallax="1.6" />
+          <img class="ph-vaso-fg" src="/scrollcraft/home/vasos-900.webp" srcset="/scrollcraft/home/vasos-560.webp 560w, /scrollcraft/home/vasos-900.webp 900w, /scrollcraft/home/vasos-1300.webp 1300w" sizes="(max-width: 860px) 60vw, 30vw" width="900" height="675" alt="" data-sc-parallax="1.6" />
           <div class="ph-shade-d" aria-hidden="true"></div>
           <div class="ph-col ph-col--d">
             <div class="ph-pad-d ph-1-d" data-sc-cue="0 0.92 0">
@@ -324,7 +324,7 @@ const estados = [
         </div>
         <div class="ph-layer ph-day">
           <figure class="ph-almacen" data-sc-reveal="down" data-sc-reveal-at="0.34 0.74" style="margin:0">
-            <img src="/scrollcraft/home/almacen-marca-1100.webp" srcset="/scrollcraft/home/almacen-marca-700.webp 700w, /scrollcraft/home/almacen-marca-1100.webp 1100w" sizes="(max-width: 860px) 100vw, 50vw" width="1100" height="1467" alt="Mozo de almacén de Polihostelería preparando un palé de cajas al amanecer" loading="lazy" />
+            <img src="/scrollcraft/home/almacen-marca-1100.webp" srcset="/scrollcraft/home/almacen-marca-700.webp 700w, /scrollcraft/home/almacen-marca-1100.webp 1100w, /scrollcraft/home/almacen-marca-1600.webp 1600w, /scrollcraft/home/almacen-marca-2200.webp 2200w" sizes="(max-width: 860px) 100vw, 50vw" width="1100" height="1473" alt="Mozo de almacén de Polihostelería preparando un palé de cajas al amanecer" loading="lazy" />
           </figure>
           <div class="ph-shade-alm" aria-hidden="true" data-sc-reveal="down" data-sc-reveal-at="0.34 0.74"></div>
           <div class="ph-col ph-col--d">
@@ -357,8 +357,8 @@ const estados = [
           </div>
         </div>
         <div class="ph-layer ph-day ph-3-day">
-          <img class="ph-prod ph-platos" src="/scrollcraft/home/platos-700.webp" srcset="/scrollcraft/home/platos-420.webp 420w, /scrollcraft/home/platos-700.webp 700w" sizes="18vw" width="700" height="933" alt="" loading="lazy" data-sc-parallax="-0.9" />
-          <img class="ph-prod ph-vasos" src="/scrollcraft/home/vasos-900.webp" srcset="/scrollcraft/home/vasos-560.webp 560w, /scrollcraft/home/vasos-900.webp 900w" sizes="30vw" width="900" height="675" alt="" loading="lazy" data-sc-parallax="1.4" />
+          <img class="ph-prod ph-platos" src="/scrollcraft/home/platos-700.webp" srcset="/scrollcraft/home/platos-420.webp 420w, /scrollcraft/home/platos-700.webp 700w, /scrollcraft/home/platos-1000.webp 1000w" sizes="18vw" width="700" height="933" alt="" loading="lazy" data-sc-parallax="-0.9" />
+          <img class="ph-prod ph-vasos" src="/scrollcraft/home/vasos-900.webp" srcset="/scrollcraft/home/vasos-560.webp 560w, /scrollcraft/home/vasos-900.webp 900w, /scrollcraft/home/vasos-1300.webp 1300w" sizes="30vw" width="900" height="675" alt="" loading="lazy" data-sc-parallax="1.4" />
           <div class="ph-col ph-col--d">
             <div class="ph-pad-d ph-3-d" data-sc-cue="0 0.95 0">
               <h2 class="ph-h2">Del vaso de caña a la cámara frigorífica.</h2>
@@ -382,7 +382,7 @@ const estados = [
           </div>
         </div>
         <div class="ph-layer ph-day">
-          <img class="sc-stage__poster" src="/scrollcraft/home/ruta-marca-poster.webp" srcset="/scrollcraft/home/ruta-marca-poster-m.webp 900w, /scrollcraft/home/ruta-marca-poster.webp 1600w" sizes="100vw" width="1600" height="900" alt="" loading="lazy" />
+          <img class="sc-stage__poster" src="/scrollcraft/home/ruta-marca-poster.webp" srcset="/scrollcraft/home/ruta-marca-poster-m.webp 960w, /scrollcraft/home/ruta-marca-poster.webp 1920w" sizes="100vw" width="1920" height="1072" alt="" loading="lazy" />
           <video data-sc-scrub data-sc-src="/scrollcraft/home/ruta-marca.mp4" data-sc-src-mobile="/scrollcraft/home/ruta-marca-m.mp4" muted playsinline aria-hidden="true"></video>
           <div class="ph-shade-ruta" aria-hidden="true"></div>
           <div class="ph-col ph-col--d">
@@ -399,7 +399,7 @@ const estados = [
     <section id="cliente" data-sc-act="pin" data-sc-span="2.8" data-ph-act="5">
       <div data-sc-stage class="ph-stage">
         <div class="ph-layer ph-night">
-          <img class="ph-bg" src="/scrollcraft/home/noche-1920.webp" srcset="/scrollcraft/home/noche-960.webp 960w, /scrollcraft/home/noche-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="" loading="lazy" />
+          <img class="ph-bg" src="/scrollcraft/home/noche-1600.webp" srcset="/scrollcraft/home/noche-960.webp 960w, /scrollcraft/home/noche-1600.webp 1600w, /scrollcraft/home/noche-2400.webp 2400w, /scrollcraft/home/noche-3200.webp 3200w" sizes="100vw" width="1600" height="893" alt="" loading="lazy" />
           <div class="ph-shade-n" aria-hidden="true"></div>
           <div class="ph-col ph-col--n">
             <div class="ph-pad-n ph-5-n" data-sc-cue="0 0.3 0">
@@ -408,7 +408,7 @@ const estados = [
           </div>
         </div>
         <div class="ph-layer ph-day">
-          <img class="ph-bg ph-5-bg" src="/scrollcraft/home/entrega-1920.webp" srcset="/scrollcraft/home/entrega-960.webp 960w, /scrollcraft/home/entrega-1920.webp 1920w" sizes="100vw" width="1920" height="1086" alt="Un repartidor de Polihostelería entrega una caja al dueño del bar, que la recoge sonriendo detrás de la barra" loading="lazy" />
+          <img class="ph-bg ph-5-bg" src="/scrollcraft/home/entrega-1600.webp" srcset="/scrollcraft/home/entrega-960.webp 960w, /scrollcraft/home/entrega-1600.webp 1600w, /scrollcraft/home/entrega-2400.webp 2400w, /scrollcraft/home/entrega-3200.webp 3200w" sizes="100vw" width="1600" height="893" alt="Un repartidor de Polihostelería entrega una caja al dueño del bar, que la recoge sonriendo detrás de la barra" loading="lazy" />
           <div class="ph-shade-close" aria-hidden="true"></div>
           <div class="ph-close">
             <h2 class="ph-h2" data-sc-cue="0.4">Pide cuando cierres. Por la mañana, en tu barra.</h2>

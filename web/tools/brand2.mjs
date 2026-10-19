@@ -10,6 +10,6 @@ const sq = async (size, out, bg) => {
 await sq(32,'favicon-32.png',{r:255,g:255,b:255,alpha:0});
 await sq(180,'apple-touch-icon.png',{r:255,g:255,b:255,alpha:1});
 await sq(512,'icon-512.png',{r:255,g:255,b:255,alpha:1});
-await sharp(B+'nave.png').resize(1200,630,{fit:'cover',position:'centre'}).jpeg({quality:82,mozjpeg:true}).toFile(P+'img/og.jpg');
+await sharp('/home/claude/hq/final/nave-marca.png').resize(1200,630,{fit:'cover',position:'centre'}).jpeg({quality:82,mozjpeg:true}).toFile(P+'img/og.jpg');
 await sharp(B+'nave.png').resize({width:2000}).jpeg({quality:84,mozjpeg:true}).toFile(A+'nave-marca.jpg');
 console.log('ok');

@@ -33,7 +33,7 @@ const schema = [
         <div class="tiles" style="margin-top:0">
           {FAMILIAS.map((f) => (
             <a class="tile" href={`/catalogo/${f.slug}/`}>
-              <Image src={foto(f.foto)} alt={f.alt} widths={[400, 720]} sizes="(max-width: 640px) 100vw, 380px" />
+              <Image src={foto(f.foto)} alt={f.alt} widths={[400, 720, 1000]} quality={82} sizes="(max-width: 640px) 100vw, 380px" />
               <div class="tile__body">
                 <h2 class="h3" style="font-size:1.12rem">{f.nombre}</h2>
                 <p>{f.corto}</p>
